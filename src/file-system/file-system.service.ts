@@ -12,6 +12,10 @@ export class FileSystemService {
     } catch (error) {
       throw new Error(`Error writing file: ${error}`);
     }
+    finally{
+      console.log('File written');
+    
+    }
   }
   readFile(path: string, encoding: string = 'utf8') {
     try {
@@ -27,5 +31,10 @@ export class FileSystemService {
       
       }
     }
+  }
+
+  deleteFile(path: string) {
+      this.fs.unlinkSync(path);
+    
   }
 }
