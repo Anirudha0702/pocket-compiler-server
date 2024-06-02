@@ -15,12 +15,16 @@ export class CompilerService {
             const fileContent = req.body.code.toString();
 
             this.fs.writeFile(filePath, fileContent);
-            return 'Java file created';
+            return {message:'Java file created',
+                success: true,
+                error:null
+            };
         } catch (error) {
             console.error('Error creating Java file:', error);
             return {
-                error: 'Error creating Java file',
-                details: error.message,
+                success: false,
+                message:null,
+               error: error.message,
             };
         }
     }
