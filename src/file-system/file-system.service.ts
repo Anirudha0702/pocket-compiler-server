@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { log } from 'console';
 import * as fs from 'fs';
 
 @Injectable()
@@ -8,33 +7,29 @@ export class FileSystemService {
   constructor() {}
   writeFile(path: string, data: string) {
     try {
+      console.log('Writing file on location: ', path);
       this.fs.writeFileSync(path, data);
+      console.log('File written on location: ', path);
     } catch (error) {
       throw new Error(`Error writing file: ${error}`);
-    }
-    finally{
-      console.log('File written');
-    
-    }
-  }
-  readFile(path: string, encoding: string = 'utf8') {
-    try {
-      const data = this.fs.readFileSync(path, {
-        encoding: encoding as BufferEncoding,
-        flag: 'r',
-      });
-      return { data: data };
-    } catch (error) {
-      return{
-        error: 'Error reading file',
-        details: error.message,
-      
-      }
     }
   }
 
   deleteFile(path: string) {
+    try {
+      console.log('Deleting file: ', path);
       this.fs.unlinkSync(path);
-    
+      console.log('Deleted file: ', path);
+    } catch (error) {
+      console.log('Error on deleting file: ', error);
+      throw new Error(`Error deleting file: ${error}`);
+    }
+  }
+  createDir(path: string) {
+    try {
+      this.fs.mkdirSync(path);
+    } catch (error) {
+      throw new Error(`Error creatinf Dir: ${error}`);
+    }
   }
 }
