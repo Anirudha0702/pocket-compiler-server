@@ -3,15 +3,13 @@ import e, { Request } from 'express';
 import * as path from 'path';
 import { FileSystemService } from 'src/file-system/file-system.service';
 import { spawn } from 'child_process';
-import { promisify } from 'util';
-import { log } from 'console';
 
 @Injectable()
 export class CompilerService {
   constructor(private fs: FileSystemService) {}
   async compileJava(req: Request) {
-    const filePath = path.join(process.cwd(),'temp', 'Main.java');
-    const classPath = path.join(process.cwd(),  'temp');
+    const filePath = path.join(process.cwd(), 'temp', 'Main.java');
+    const classPath = path.join(process.cwd(), 'temp');
     try {
       const fileContent = req.body.code.toString();
       const inputs = req.body.input;
@@ -21,29 +19,37 @@ export class CompilerService {
         message: string | null;
         error: string | null;
       } = await new Promise((resolve, reject) => {
-        const compileProcess = spawn('javac', [filePath]);
-        let errorOutput = '';
-        compileProcess.stderr.on('data', (data) => {
-          errorOutput += data.toString();
-        });
+        try {
+          const compileProcess = spawn('javac', [filePath]);
+          let errorOutput = '';
+          compileProcess.stderr.on('data', (data) => {
+            errorOutput += data.toString();
+          });
 
-        compileProcess.on('exit', (code) => {
-          if (code === 0) {
-            resolve({
-              success: true,
-              message: 'compiled successfully',
-              error: null,
-            });
-          } else {
-            resolve({
-              success: false,
-              message: null,
-              error: errorOutput || 'Error compiling Java file',
-            });
-          }
-        });
+          compileProcess.on('exit', (code) => {
+            if (code === 0) {
+              resolve({
+                success: true,
+                message: 'compiled successfully',
+                error: null,
+              });
+            } else {
+              resolve({
+                success: false,
+                message: null,
+                error: errorOutput || 'Error compiling Java file',
+              });
+            }
+          });
+        } catch (error) {
+          resolve({
+            success: false,
+            message: null,
+            error: error.message,
+          });
+        }
       });
-      if (!compile.success) throw new Error(compile.error);
+      if (!compile.success) return compile;
       const execute = await new Promise((resolve, reject) => {
         const executeProcess = spawn('java', ['-cp', classPath, 'Main']);
         let output = '';
@@ -80,13 +86,14 @@ export class CompilerService {
         message: null,
         error: error.message,
       };
-    } finally {
+    } 
+    finally {
       this.fs.deleteFile(filePath);
       this.fs.deleteFile(path.join(classPath, 'Main.class'));
     }
   }
   async compilePython(req: Request) {
-    const filePath = path.join(process.cwd(),'temp', 'Main.py');
+    const filePath = path.join(process.cwd(), 'temp', 'Main.py');
     try {
       const fileContent = req.body.code.toString();
       const inputs = req.body.input;
@@ -132,8 +139,8 @@ export class CompilerService {
     }
   }
   async compileC(req: Request) {
-    const filePath = path.join(process.cwd(),'temp','Main.c');
-    const outputFilePath = path.join(process.cwd(),  'temp','Main.exe');
+    const filePath = path.join(process.cwd(), 'temp', 'Main.c');
+    const outputFilePath = path.join(process.cwd(), 'temp', 'Main.exe');
     try {
       const fileContent = req.body.code.toString();
       const inputs = req.body.input;
@@ -202,15 +209,14 @@ export class CompilerService {
         message: null,
         error: error.message,
       };
-    } 
-    finally {
+    } finally {
       this.fs.deleteFile(filePath);
       this.fs.deleteFile(outputFilePath);
     }
   }
   async compileCpp(req: Request) {
-    const filePath = path.join(process.cwd(),'temp', 'Main.cpp');
-    const outputFilePath = path.join(process.cwd(),'temp', 'Main.exe');
+    const filePath = path.join(process.cwd(), 'temp', 'Main.cpp');
+    const outputFilePath = path.join(process.cwd(), 'temp', 'Main.exe');
     try {
       const fileContent = req.body.code.toString();
       const inputs = req.body.input;
@@ -220,7 +226,7 @@ export class CompilerService {
         message: string | null;
         error: string | null;
       } = await new Promise((resolve, reject) => {
-        const compileProcess = spawn('g++', ['-o',outputFilePath, filePath]);
+        const compileProcess = spawn('g++', ['-o', outputFilePath, filePath]);
         let errorOutput = '';
         compileProcess.stderr.on('data', (data) => {
           errorOutput += data.toString();
@@ -285,7 +291,7 @@ export class CompilerService {
     }
   }
   async compileJs(req: Request) {
-    const filePath = path.join(process.cwd(),'temp', 'Main.js');
+    const filePath = path.join(process.cwd(), 'temp', 'Main.js');
     try {
       const fileContent = req.body.code.toString();
       const inputs = req.body.input;

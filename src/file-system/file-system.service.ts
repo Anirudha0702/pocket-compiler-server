@@ -18,8 +18,12 @@ export class FileSystemService {
   deleteFile(path: string) {
     try {
       console.log('Deleting file: ', path);
-      this.fs.unlinkSync(path);
-      console.log('Deleted file: ', path);
+      if(this.fs.existsSync(path)){
+
+        this.fs.unlinkSync(path);
+        console.log('Deleted file: ', path);
+      }
+      else console.log('File does not exist: ', path);
     } catch (error) {
       console.log('Error on deleting file: ', error);
       throw new Error(`Error deleting file: ${error}`);
