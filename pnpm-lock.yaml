@@ -11,12 +11,21 @@ importers:
       '@nestjs/platform-express':
         specifier: ^11.0.9
         version: 11.0.9(@nestjs/common@11.0.9(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/core@11.0.9)
+      '@nestjs/platform-socket.io':
+        specifier: ^11.0.9
+        version: 11.0.9(@nestjs/common@11.0.9(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/websockets@11.0.9)(rxjs@7.8.1)
+      '@nestjs/websockets':
+        specifier: ^11.0.9
+        version: 11.0.9(@nestjs/common@11.0.9(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/core@11.0.9)(@nestjs/platform-socket.io@11.0.9)(reflect-metadata@0.2.2)(rxjs@7.8.1)
       reflect-metadata:
         specifier: ^0.2.0
         version: 0.2.2
       rxjs:
         specifier: ^7.8.1
         version: 7.8.1
+      socket.io:
+        specifier: ^4.8.1
+        version: 4.8.1
     devDependencies:
       '@nestjs/cli':
         specifier: ^10.0.0
@@ -31,8 +40,8 @@ importers:
         specifier: ^10.0.0
         version: 10.1.1(chokidar@3.6.0)(typescript@5.4.5)
       '@nestjs/testing':
-        specifier: ^10.0.0
-        version: 10.3.8(@nestjs/common@11.0.9(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/core@11.0.9)(@nestjs/platform-express@11.0.9)
+        specifier: ^11.0.9
+        version: 11.0.9(@nestjs/common@11.0.9(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/core@11.0.9)(@nestjs/platform-express@11.0.9)
       '@types/express':
         specifier: ^4.17.17
         version: 4.17.21
@@ -491,13 +500,13 @@ packages:
     peerDependencies:
       typescript: '>=4.8.2'
 
-  '@nestjs/testing@10.3.8':
-    resolution: {integrity: sha512-hpX9das2TdFTKQ4/2ojhjI6YgXtCfXRKui3A4Qaj54VVzc5+mtK502Jj18Vzji98o9MVS6skmYu+S/UvW3U6Fw==}
+  '@nestjs/testing@11.0.9':
+    resolution: {integrity: sha512-49UV5tC4N0pLf6waVjBVr/CyTkQPGZG/wLmbmu1INd/brprKOJ2lT3nl+6qfWJIqGbxGqZHUQr5FcDk+T/w9lQ==}
     peerDependencies:
-      '@nestjs/common': ^10.0.0
-      '@nestjs/core': ^10.0.0
-      '@nestjs/microservices': ^10.0.0
-      '@nestjs/platform-express': ^10.0.0
+      '@nestjs/common': ^11.0.0
+      '@nestjs/core': ^11.0.0
+      '@nestjs/microservices': ^11.0.0
+      '@nestjs/platform-express': ^11.0.0
     peerDependenciesMeta:
       '@nestjs/microservices':
         optional: true
@@ -3534,7 +3543,6 @@ snapshots:
       - bufferutil
       - supports-color
       - utf-8-validate
-    optional: true
 
   '@nestjs/schematics@10.1.1(chokidar@3.6.0)(typescript@5.3.3)':
     dependencies:
@@ -3558,11 +3566,11 @@ snapshots:
     transitivePeerDependencies:
       - chokidar
 
-  '@nestjs/testing@10.3.8(@nestjs/common@11.0.9(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/core@11.0.9)(@nestjs/platform-express@11.0.9)':
+  '@nestjs/testing@11.0.9(@nestjs/common@11.0.9(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/core@11.0.9)(@nestjs/platform-express@11.0.9)':
     dependencies:
       '@nestjs/common': 11.0.9(reflect-metadata@0.2.2)(rxjs@7.8.1)
       '@nestjs/core': 11.0.9(@nestjs/common@11.0.9(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/platform-express@11.0.9)(@nestjs/websockets@11.0.9)(reflect-metadata@0.2.2)(rxjs@7.8.1)
-      tslib: 2.6.2
+      tslib: 2.8.1
     optionalDependencies:
       '@nestjs/platform-express': 11.0.9(@nestjs/common@11.0.9(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/core@11.0.9)
 
@@ -3577,7 +3585,6 @@ snapshots:
       tslib: 2.8.1
     optionalDependencies:
       '@nestjs/platform-socket.io': 11.0.9(@nestjs/common@11.0.9(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/websockets@11.0.9)(rxjs@7.8.1)
-    optional: true
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
@@ -3610,8 +3617,7 @@ snapshots:
     dependencies:
       '@sinonjs/commons': 3.0.1
 
-  '@socket.io/component-emitter@3.1.2':
-    optional: true
+  '@socket.io/component-emitter@3.1.2': {}
 
   '@tsconfig/node10@1.0.11': {}
 
@@ -3656,7 +3662,6 @@ snapshots:
   '@types/cors@2.8.17':
     dependencies:
       '@types/node': 20.13.0
-    optional: true
 
   '@types/eslint-scope@3.7.7':
     dependencies:
@@ -3923,7 +3928,6 @@ snapshots:
     dependencies:
       mime-types: 2.1.35
       negotiator: 0.6.3
-    optional: true
 
   accepts@2.0.0:
     dependencies:
@@ -4065,8 +4069,7 @@ snapshots:
 
   base64-js@1.5.1: {}
 
-  base64id@2.0.0:
-    optional: true
+  base64id@2.0.0: {}
 
   binary-extensions@2.3.0: {}
 
@@ -4273,8 +4276,7 @@ snapshots:
 
   cookie@0.7.1: {}
 
-  cookie@0.7.2:
-    optional: true
+  cookie@0.7.2: {}
 
   cookiejar@2.1.4: {}
 
@@ -4396,8 +4398,7 @@ snapshots:
 
   encodeurl@2.0.0: {}
 
-  engine.io-parser@5.2.3:
-    optional: true
+  engine.io-parser@5.2.3: {}
 
   engine.io@6.6.4:
     dependencies:
@@ -4414,7 +4415,6 @@ snapshots:
       - bufferutil
       - supports-color
       - utf-8-validate
-    optional: true
 
   enhanced-resolve@5.16.1:
     dependencies:
@@ -5528,8 +5528,7 @@ snapshots:
 
   natural-compare@1.4.0: {}
 
-  negotiator@0.6.3:
-    optional: true
+  negotiator@0.6.3: {}
 
   negotiator@1.0.0: {}
 
@@ -5553,8 +5552,7 @@ snapshots:
 
   object-assign@4.1.1: {}
 
-  object-hash@3.0.0:
-    optional: true
+  object-hash@3.0.0: {}
 
   object-inspect@1.13.1: {}
 
@@ -5917,7 +5915,6 @@ snapshots:
       - bufferutil
       - supports-color
       - utf-8-validate
-    optional: true
 
   socket.io-parser@4.2.4:
     dependencies:
@@ -5925,7 +5922,6 @@ snapshots:
       debug: 4.3.6
     transitivePeerDependencies:
       - supports-color
-    optional: true
 
   socket.io@4.8.1:
     dependencies:
@@ -5940,7 +5936,6 @@ snapshots:
       - bufferutil
       - supports-color
       - utf-8-validate
-    optional: true
 
   source-map-support@0.5.13:
     dependencies:
@@ -6300,8 +6295,7 @@ snapshots:
       imurmurhash: 0.1.4
       signal-exit: 3.0.7
 
-  ws@8.17.1:
-    optional: true
+  ws@8.17.1: {}
 
   xtend@4.0.2: {}
 
